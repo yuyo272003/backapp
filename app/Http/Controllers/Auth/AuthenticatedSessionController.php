@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         // Inicia sesión
-//        auth()->login($user);
+       auth()->login($user);
 
         // Crea token de acceso
         $token = $user->createToken('API Token')->plainTextToken;
@@ -50,7 +50,9 @@ class AuthenticatedSessionController extends Controller
 //
 //        $request->session()->regenerateToken();
 
-        $request->user()->currentAccessToken()->delete();
+        //$request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->delete();
+
 
         return response()->json([
             'success' => true,
