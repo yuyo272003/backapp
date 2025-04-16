@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\Progreso;
 use App\Models\Leccion;
 use App\Models\Nivel;
@@ -10,12 +11,14 @@ use App\Models\Nivel;
 class ProgresoController extends Controller
 {
     /**
-     * Actualiza el progreso del usuario en la lección y recalcula el progreso en el nivel.
+     * Registrar una lección completada y actualizar el porcentaje de progreso en el nivel.
      */
     public function actualizarProgreso(Request $request)
     {
+        Log::info("🎯 Se recibió petición de progreso:", $request->all());
+
         $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'usuario_id' => 'required|exists:users,id', // asegúrate que la tabla es users
             'leccion_id' => 'required|exists:lecciones,id',
         ]);
 
@@ -26,48 +29,106 @@ class ProgresoController extends Controller
         $leccion = Leccion::findOrFail($leccionId);
         $nivelId = $leccion->nivel_id;
 
-        // Buscar el progreso existente del usuario en este nivel
-        $progreso = Progreso::where('usuario_id', $usuarioId)
-            ->where('nivel_id', $nivelId)
+        // Verificar si ya existe un progreso registrado para esta lección
+        $progresoExistente = Progreso::where('usuario_id', $usuarioId)
+            ->where('leccion_id', $leccionId)
             ->first();
 
-        // Si no existe el progreso, crear uno nuevo para el primer nivel
-        if (!$progreso) {
-            $progreso = Progreso::create([
-                'usuario_id' => $usuarioId,
-                'nivel_id' => $nivelId,
-                'leccion_id' => $leccionId,
-                'porcentaje' => $this->calcularProgresoNivel($usuarioId, $nivelId),
-            ]);
-        } else {
-            // Si existe, actualizamos el progreso en el nivel
-            $progreso->update([
-                'leccion_id' => $leccionId,
-                'porcentaje' => $this->calcularProgresoNivel($usuarioId, $nivelId),
-            ]);
+        if ($progresoExistente) {
+            return response()->json([
+                'message' => 'Esta lección ya fue registrada previamente.',
+                'progreso' => $progresoExistente
+            ], 200);
+        }
+
+        // Crear el nuevo progreso
+        Progreso::create([
+            'usuario_id' => $usuarioId,
+            'nivel_id' => $nivelId,
+            'leccion_id' => $leccionId,
+            'porcentaje' => 0,
+        ]);
+
+        // Recalcular el porcentaje total del nivel
+        $porcentaje = $this->calcularProgresoNivel($usuarioId, $nivelId);
+
+        // Actualizar el porcentaje en todos los progresos de este nivel para el usuario
+        Progreso::where('usuario_id', $usuarioId)
+            ->where('nivel_id', $nivelId)
+            ->update(['porcentaje' => $porcentaje]);
+
+        // Si el nivel ya se completó al 100%, actualizamos los niveles completados del usuario
+        if ($porcentaje == 100) {
+            $this->actualizarConteoNivelesCompletados($usuarioId);
         }
 
         return response()->json([
             'message' => 'Progreso actualizado correctamente',
-            'progreso' => $progreso
+            'porcentaje' => round($porcentaje, 2),
+            'nivel_id' => $nivelId
         ]);
     }
 
     /**
-     * Calcula el porcentaje de progreso en un nivel basado en las lecciones completadas.
+     * Calcula el porcentaje de progreso en un nivel según lecciones completadas.
      */
     private function calcularProgresoNivel($usuarioId, $nivelId)
     {
-        // Contamos cuántas lecciones hay en este nivel
         $totalLecciones = Leccion::where('nivel_id', $nivelId)->count();
 
-        // Contamos cuántas lecciones ha completado el usuario en este nivel
         $leccionesCompletadas = Progreso::where('usuario_id', $usuarioId)
             ->where('nivel_id', $nivelId)
-            ->count();
+            ->distinct('leccion_id')
+            ->count('leccion_id');
 
-        // Calculamos el porcentaje de avance
         return ($totalLecciones > 0) ? ($leccionesCompletadas / $totalLecciones) * 100 : 0;
     }
-}
 
+    /**
+     * Cuenta cuántos niveles completos tiene el usuario y actualiza ese dato en todos sus progresos.
+     */
+    private function actualizarConteoNivelesCompletados($usuarioId)
+    {
+        $nivelesCompletados = Progreso::where('usuario_id', $usuarioId)
+            ->where('porcentaje', 100)
+            ->distinct('nivel_id')
+            ->count('nivel_id');
+
+        Progreso::where('usuario_id', $usuarioId)
+            ->update(['niveles_completados' => $nivelesCompletados]);
+    }
+
+    /**
+     * Devuelve el resumen del progreso por nivel del usuario.
+     */
+    public function obtenerProgresoPorNivel($usuarioId)
+    {
+        $niveles = Nivel::with('lecciones')->get();
+        $resumen = [];
+
+        foreach ($niveles as $nivel) {
+            $porcentaje = $this->calcularProgresoNivel($usuarioId, $nivel->id);
+
+            $resumen[] = [
+                'nivel_id' => $nivel->id,
+                'nombre' => $nivel->nombre,
+                'porcentaje' => round($porcentaje, 2),
+                'total_lecciones' => $nivel->lecciones->count(),
+            ];
+        }
+
+        return response()->json($resumen);
+    }
+
+    public function verProgreso(Request $request)
+    {
+        $user = $request->user();
+        $progreso = $user->progreso;
+
+        return response()->json([
+            'niveles_completados' => $progreso->niveles_completados ?? 0
+        ]);
+    }
+
+
+}

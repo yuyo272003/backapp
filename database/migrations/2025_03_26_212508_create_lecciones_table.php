@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lecciones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nivel_id')->constrained()->onDelete('cascade');  // Relación con niveles
+            $table->foreignId('nivel_id')->constrained('niveles')->onDelete('cascade');// Relación con niveles
             $table->string('titulo');  // Título de la lección
             $table->integer('orden');  // Orden de la lección en el nivel
             $table->timestamps();  // Marca de tiempo para la lección

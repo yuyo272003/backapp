@@ -32,11 +32,19 @@ class AuthenticatedSessionController extends Controller
 
         // Crea token de acceso
         $token = $user->createToken('API Token')->plainTextToken;
+        $ultimoProgreso = \App\Models\Progreso::where('usuario_id', $user->id)
+            ->orderByDesc('id') // o created_at
+            ->first();
+
+        $nivelesCompletados = $ultimoProgreso?->niveles_completados ?? 0;
+;
 
         return response()->json([
             'user' => $user,
             'token' => $token,
+            'niveles_completados' => $nivelesCompletados,
         ]);
+
     }
 
     /**

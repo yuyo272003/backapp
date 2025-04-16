@@ -12,17 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('progreso', function (Blueprint $table) {
-            Schema::create('progreso', function (Blueprint $table) {
-                $table->id();
-                $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
-                $table->foreignId('nivel_id')->constrained('niveles')->onDelete('cascade');
-                $table->foreignId('leccion_id')->constrained('lecciones')->onDelete('cascade');
-                $table->decimal('porcentaje', 5, 2);  // El progreso de la lección (porcentaje)
-                $table->integer('niveles_completados')->default(0);  // Número de niveles completados
-                $table->timestamps();  // Marca de tiempo para el progreso
-            });
+            $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('nivel_id')->constrained('niveles')->onDelete('cascade');
+            $table->foreignId('leccion_id')->constrained('lecciones')->onDelete('cascade');
+            $table->decimal('porcentaje', 5, 2);
+            $table->integer('niveles_completados')->default(0);
+            $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
