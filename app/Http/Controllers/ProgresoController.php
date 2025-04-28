@@ -134,27 +134,26 @@ class ProgresoController extends Controller
     {
         $user = $request->user();
 
-        // 1) Obtener el progreso más avanzado
-        $progreso = Progreso::where('usuario_id', $user->id)
-            ->orderByDesc('nivel_id')
-            ->orderByDesc('leccion_id')
-            ->first();
+        // 1) Cargar el único registro de progreso de este usuario (o crearlo si no existe)
+        $progreso = Progreso::firstOrNew([
+            'usuario_id' => $user->id,
+        ]);
 
-        $nivelActual   = $progreso->nivel_id ?? 1;
+        // 2) Determinar dónde estamos (nivel/lección actuales)
+        $nivelActual   = $progreso->nivel_id   ?? 1;
         $leccionActual = $progreso->leccion_id ?? 1;
 
-        // 2) Saber el orden de la lección actual
         $ordenActual = Leccion::where('nivel_id', $nivelActual)
-            ->where('id', $leccionActual)
+            ->where('id',       $leccionActual)
             ->value('orden') ?? 1;
 
-        // 3) Buscar la siguiente lección dentro del mismo nivel
+        // 3) Buscar siguiente lección en mismo nivel
         $siguiente = Leccion::where('nivel_id', $nivelActual)
-            ->where('orden', '>', $ordenActual)
+            ->where('orden',    '>', $ordenActual)
             ->orderBy('orden')
             ->first();
 
-        // 4) Si ya no hay más lecciones en este nivel, pasar al siguiente nivel
+        // 4) Si no hay más en este nivel, pasar al siguiente nivel
         if (! $siguiente) {
             $nivelActual++;
             $siguiente = Leccion::where('nivel_id', $nivelActual)
@@ -169,32 +168,34 @@ class ProgresoController extends Controller
             ], 200);
         }
 
-        // 6) Calcular porcentaje basándonos en el ORDEN de la nueva lección
+        // 6) Calcular el porcentaje sobre el total de lecciones de este nivel
         $totalLecciones = Leccion::where('nivel_id', $siguiente->nivel_id)->count();
         $ordenSig       = $siguiente->orden;
-        // … justo después de obtener $ordenSig y $totalLecciones
+        // Al entrar en orden 1 → 0%, orden 2 → (1/total)*100, etc.
         $porcentaje = round((($ordenSig - 1) / $totalLecciones) * 100, 2);
 
+        // 7) Contar cuántos niveles distintos ha abierto ya el usuario
+        $nivelesCompletados = Progreso::where('usuario_id', $user->id)
+            ->distinct()
+            ->count('nivel_id');
 
-        // 7) Actualizar (o crear si no existiera) el progreso de este nivel
-        $registro = Progreso::updateOrCreate(
-            [
-                'usuario_id' => $user->id,
-                'nivel_id'   => $siguiente->nivel_id,
-            ],
-            [
-                'leccion_id' => $siguiente->id,
-                'porcentaje' => $porcentaje,
-            ]
-        );
+        // 8) Sobrescribir el mismo registro con los nuevos valores
+        $progreso->nivel_id            = $siguiente->nivel_id;
+        $progreso->leccion_id          = $siguiente->id;
+        $progreso->porcentaje          = $porcentaje;
+        $progreso->niveles_completados = $nivelesCompletados;
+        $progreso->save();
 
+        // 9) Responder al frontend con todo lo que necesita
         return response()->json([
-            'message'     => 'Progreso actualizado correctamente',
-            'nivel_id'    => $siguiente->nivel_id,
-            'leccion_id'  => $siguiente->id,
-            'porcentaje'  => $porcentaje,
+            'message'             => 'Progreso actualizado correctamente',
+            'nivel_id'            => $siguiente->nivel_id,
+            'leccion_id'          => $siguiente->id,
+            'porcentaje'          => $porcentaje,
+            'niveles_completados' => $nivelesCompletados,
         ], 200);
     }
+
 
 
 
