@@ -272,6 +272,94 @@ class ProgresoController extends Controller
         ]);
     }
 
+    public function avanzarLeccion(Request $request, int $nivelPantalla, int $leccionPantalla)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no autenticado'], 401);
+        }
+
+        $progreso = Progreso::firstOrNew(['usuario_id' => $user->id]);
+
+        if (
+            $progreso->nivel_id > $nivelPantalla ||
+            ($progreso->nivel_id == $nivelPantalla && $progreso->leccion_id > $leccionPantalla)
+        ) {
+            return response()->json([
+                'message' => 'Esta pantalla ya fue superada. No se modificó el progreso.',
+                'repeticion' => true,
+            ]);
+        }
+
+        $ordenActual = Leccion::where('nivel_id', $nivelPantalla)
+            ->where('id', $leccionPantalla)
+            ->value('orden') ?? 1;
+
+        $siguiente = Leccion::where('nivel_id', $nivelPantalla)
+            ->where('orden', '>', $ordenActual)
+            ->orderBy('orden')
+            ->first();
+
+        if (!$siguiente) {
+            $siguiente = Leccion::where('nivel_id', $nivelPantalla + 1)
+                ->orderBy('orden')
+                ->first();
+
+            if ($siguiente) {
+                $progreso->niveles_completados = ($progreso->niveles_completados ?? 0) + 1;
+            }
+        }
+
+        if (!$siguiente) {
+            return response()->json([
+                'message' => 'Ya completaste todas las lecciones disponibles.',
+                'finalizado' => true,
+            ]);
+        }
+
+        $totalLecciones = Leccion::where('nivel_id', $siguiente->nivel_id)->count();
+        $ordenSiguiente = $siguiente->orden;
+        $porcentaje = round((($ordenSiguiente - 1) / $totalLecciones) * 100, 2);
+
+        $progreso->nivel_id = $siguiente->nivel_id;
+        $progreso->leccion_id = $siguiente->id;
+        $progreso->porcentaje = $porcentaje;
+        $progreso->save();
+
+        return response()->json([
+            'message' => 'Progreso actualizado correctamente',
+            'nivel_id' => $siguiente->nivel_id,
+            'leccion_id' => $siguiente->id,
+            'porcentaje' => $porcentaje,
+            'niveles_completados' => $progreso->niveles_completados ?? 0,
+        ]);
+    }
+
+    public function avanzarLeccion2(Request $request)
+    {
+        return $this->avanzarLeccion($request, 1, 2);
+    }
+
+    public function avanzarLeccion3(Request $request)
+    {
+        return $this->avanzarLeccion($request, 1, 3);
+    }
+
+    public function avanzarLeccion4(Request $request)
+    {
+        return $this->avanzarLeccion($request, 1, 4);
+    }
+
+    public function avanzarLeccion5(Request $request)
+    {
+        return $this->avanzarLeccion($request, 1, 5);
+    }
+
+    public function avanzarLeccion6(Request $request)
+    {
+        return $this->avanzarLeccion($request, 1, 6);
+    }
 
 
 
