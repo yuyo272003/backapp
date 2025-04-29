@@ -23,4 +23,6 @@ Route::middleware('auth:sanctum')->post('/progreso/siguiente-leccion', [Progreso
 
 
 
+Route::middleware('auth:sanctum')->post('/progreso/avanzar-vowel-match', [ProgresoController::class, 'avanzarVowelMatchGame']);
+
 require __DIR__.'/auth.php';
