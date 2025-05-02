@@ -1,0 +1,8 @@
+{
+    "build": {
+        "cmd": "composer install"
+    },
+    "deploy": {
+        "cmd": "php artisan migrate --force && php artisan db:seed"
+    }
+}
