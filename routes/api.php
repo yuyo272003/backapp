@@ -21,6 +21,8 @@ Route::middleware('auth:sanctum')->post('/progreso/avanzar', [ProgresoController
 // routes/api.php
 Route::middleware('auth:sanctum')->post('/progreso/siguiente-leccion', [ProgresoController::class, 'siguienteLeccion']);
 
+Route::middleware('auth:sanctum')->post('/progreso/get-leccion', [ProgresoController::class, 'obtenerLeccionId']);
+
 
 
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-vowel-match', [ProgresoController::class, 'avanzarVowelMatchGame']);

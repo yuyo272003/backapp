@@ -130,6 +130,16 @@ class ProgresoController extends Controller
         ]);
     }
 
+    // Añadir este endpoint en tu controlador
+    public function obtenerLeccionId(Request $request)
+    {
+        $user = auth()->user(); // Obtener el usuario autenticado
+
+        return response()->json([
+            'leccion_id' => $user->leccion_id,  // Retorna el leccion_id actual
+        ]);
+    }
+
 
     public function avanzar(Request $request)
     {
