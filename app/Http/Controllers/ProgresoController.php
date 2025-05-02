@@ -135,12 +135,15 @@ class ProgresoController extends Controller
     {
         $userId = auth()->id();
 
-        $progreso = Progreso::where('usuario_id', $userId)->latest()->first();
+        $progreso = \App\Models\Progreso::where('usuario_id', $userId)
+            ->orderByDesc('id') // o usa 'created_at' si prefieres
+            ->first();
 
         return response()->json([
             'leccion_id' => $progreso ? $progreso->leccion_id : 1,
         ]);
     }
+
 
 
 
