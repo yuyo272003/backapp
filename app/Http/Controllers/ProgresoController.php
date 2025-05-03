@@ -378,8 +378,55 @@ class ProgresoController extends Controller
 
     public function avanzarLeccion6(Request $request)
     {
-        return $this->avanzarLeccion($request, 1, 6);
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no autenticado'], 401);
+        }
+
+        $progreso = Progreso::firstOrNew(['usuario_id' => $user->id]);
+
+        // ✅ Protección contra repetición
+        if (
+            $progreso->nivel_id > 1 ||
+            ($progreso->nivel_id == 1 && $progreso->leccion_id > 6)
+        ) {
+            return response()->json([
+                'message' => 'Esta pantalla ya fue superada. No se modificó el progreso.',
+                'repeticion' => true,
+            ]);
+        }
+
+        // 🔍 Buscar la primera lección del nivel 2
+        $primeraNivel2 = Leccion::where('nivel_id', 2)->orderBy('orden')->first();
+
+        if (!$primeraNivel2) {
+            return response()->json([
+                'error' => 'No se encontró la primera lección del nivel 2.'
+            ], 404);
+        }
+
+        $totalLeccionesNivel2 = Leccion::where('nivel_id', 2)->count();
+        $porcentaje = round((($primeraNivel2->orden - 1) / $totalLeccionesNivel2) * 100, 2);
+
+        // 🧠 Sumar +1 al leccion_id actual
+        $nuevoLeccionId = $primeraNivel2->id + 1;
+
+        $progreso->nivel_id = 2;
+        $progreso->leccion_id = $nuevoLeccionId;
+        $progreso->porcentaje = $porcentaje;
+        $progreso->niveles_completados = ($progreso->niveles_completados ?? 0) + 1;
+        $progreso->save();
+
+        return response()->json([
+            'message' => 'Progreso actualizado manualmente a nivel 2',
+            'nivel_id' => $progreso->nivel_id,
+            'leccion_id' => $progreso->leccion_id,
+            'porcentaje' => $progreso->porcentaje,
+            'niveles_completados' => $progreso->niveles_completados,
+        ]);
     }
+
 
     public function avanzarLeccion7(Request $request)
     {
