@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-2', [Progreso
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-3', [ProgresoController::class, 'avanzarLeccion3']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-4', [ProgresoController::class, 'avanzarLeccion4']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-5', [ProgresoController::class, 'avanzarLeccion5']);
-Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-7', [ProgresoController::class, 'avanzarLeccion6']);
+Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-6', [ProgresoController::class, 'avanzarLeccion6']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-7', [ProgresoController::class, 'avanzarLeccion7']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-8', [ProgresoController::class, 'avanzarLeccion8']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-9', [ProgresoController::class, 'avanzarLeccion9']);

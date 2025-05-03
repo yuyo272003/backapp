@@ -378,53 +378,8 @@ class ProgresoController extends Controller
 
     public function avanzarLeccion6(Request $request)
     {
-        $user = $request->user();
-
-        if (!$user) {
-            return response()->json(['error' => 'Usuario no autenticado'], 401);
-        }
-
-        $progreso = Progreso::firstOrNew(['usuario_id' => $user->id]);
-
-        // ✅ Validación para evitar repetir si ya avanzó
-        if (
-            $progreso->nivel_id > 1 ||
-            ($progreso->nivel_id == 1 && $progreso->leccion_id >= 6)
-        ) {
-            return response()->json([
-                'message' => 'Esta pantalla ya fue superada. No se modificó el progreso.',
-                'repeticion' => true,
-            ]);
-        }
-
-        // ✅ Obtener lección 7 del nivel 2
-        $nuevaLeccion = Leccion::where('nivel_id', 2)
-            ->where('orden', 1) // Esta es la primera del nivel 2
-            ->first();
-
-        if (!$nuevaLeccion) {
-            return response()->json(['error' => 'Lección no encontrada'], 404);
-        }
-
-        $totalLeccionesNivel2 = Leccion::where('nivel_id', 2)->count();
-        $porcentaje = round((($nuevaLeccion->orden - 1) / $totalLeccionesNivel2) * 100, 2);
-
-        $progreso->nivel_id = $nuevaLeccion->nivel_id;
-        $progreso->leccion_id = $nuevaLeccion->id;
-        $progreso->porcentaje = $porcentaje;
-        $progreso->niveles_completados = ($progreso->niveles_completados ?? 0) + 1;
-        $progreso->save();
-
-        return response()->json([
-            'message' => 'Progreso actualizado a nivel 2, lección inicial',
-            'nivel_id' => $progreso->nivel_id,
-            'leccion_id' => $progreso->leccion_id,
-            'porcentaje' => $progreso->porcentaje,
-            'niveles_completados' => $progreso->niveles_completados,
-        ]);
+        return $this->avanzarLeccion($request, 1, 6);
     }
-
-
 
     public function avanzarLeccion7(Request $request)
     {
