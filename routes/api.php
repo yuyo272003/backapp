@@ -23,8 +23,6 @@ Route::middleware('auth:sanctum')->post('/progreso/siguiente-leccion', [Progreso
 
 Route::middleware('auth:sanctum')->post('/progreso/get-leccion', [ProgresoController::class, 'obtenerLeccionId']);
 
-
-
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-vowel-match', [ProgresoController::class, 'avanzarVowelMatchGame']);
 
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-1', [ProgresoController::class, 'avanzarLeccion1']);

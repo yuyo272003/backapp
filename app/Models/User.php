@@ -46,4 +46,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // App\Models\User.php
+    public function progreso()
+    {
+        return $this->hasOne(Progreso::class, 'usuario_id');
+    }
+
 }

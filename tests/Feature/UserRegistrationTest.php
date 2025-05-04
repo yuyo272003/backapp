@@ -21,6 +21,6 @@ class UserRegistrationTest extends TestCase
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('users', ['name' => 'Andres']);
-        $this->assertDatabaseHas('progresos', ['nivel_id' => $leccion->nivel_id]);
+        $this->assertDatabaseHas('progreso', ['nivel_id' => $leccion->nivel_id]);
     }
 }
