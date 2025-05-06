@@ -144,7 +144,20 @@ class ProgresoController extends Controller
         ]);
     }
 
+    public function obtenerNivelesCompletados(Request $request)
+    {
+        $userId = $request->user()->id;
 
+        $progreso = Progreso::where('usuario_id', $userId)
+            ->orderByDesc('id') // o por created_at
+            ->first();
+
+        return response()->json([
+            'niveles_completados' => $progreso
+                ? $progreso->niveles_completados
+                : 0,
+        ]);
+    }
 
 
     public function avanzar(Request $request)
