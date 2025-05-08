@@ -396,17 +396,17 @@ class ProgresoController extends Controller
 
     public function avanzarLeccion7(Request $request)
     {
-        return $this->avanzarLeccion($request, 2, 1);
+        return $this->avanzarLeccion($request, 2, 7);
     }
 
     public function avanzarLeccion8(Request $request)
     {
-        return $this->avanzarLeccion($request, 2, 2);
+        return $this->avanzarLeccion($request, 2, 8);
     }
 
     public function avanzarLeccion9(Request $request)
     {
-        return $this->avanzarLeccion($request, 2, 3);
+        return $this->avanzarLeccion($request, 2, 9);
     }
 
 //    public function avanzarLeccion10(Request $request)
@@ -416,78 +416,78 @@ class ProgresoController extends Controller
 
     public function avanzarLeccion10(Request $request)
     {
-        return $this->avanzarLeccion($request, 3, 1);
+        return $this->avanzarLeccion($request, 3, 10);
     }
 
 
     public function avanzarLeccion11(Request $request)
     {
-        return $this->avanzarLeccion($request, 3, 2);
+        return $this->avanzarLeccion($request, 3, 11);
     }
 
     public function avanzarLeccion12(Request $request)
     {
-        return $this->avanzarLeccion($request, 3, 3);
+        return $this->avanzarLeccion($request, 3, 12);
     }
 
     public function avanzarLeccion13(Request $request)
     {
-        return $this->avanzarLeccion($request, 4, 1);
+        return $this->avanzarLeccion($request, 4, 13);
     }
     public function avanzarLeccion14(Request $request)
     {
-        return $this->avanzarLeccion($request, 4, 2);
+        return $this->avanzarLeccion($request, 4, 14);
     }
 
     public function avanzarLeccion15(Request $request)
     {
-        return $this->avanzarLeccion($request, 4, 3);
+        return $this->avanzarLeccion($request, 4, 15);
     }
 
     public function avanzarLeccion16(Request $request)
     {
-        return $this->avanzarLeccion($request, 4, 4);
+        return $this->avanzarLeccion($request, 4, 16);
     }
 
 
     public function avanzarLeccion17(Request $request)
     {
-        return $this->avanzarLeccion($request, 4, 5);
+        return $this->avanzarLeccion($request, 4, 17);
     }
 
 
     public function avanzarLeccion18(Request $request)
     {
-        return $this->avanzarLeccion($request, 5, 1);
+        return $this->avanzarLeccion($request, 5, 18);
     }
 
     public function avanzarLeccion19(Request $request)
     {
-        return $this->avanzarLeccion($request, 5, 2);
+        return $this->avanzarLeccion($request, 5, 19);
     }
 
     public function avanzarLeccion20(Request $request)
     {
-        return $this->avanzarLeccion($request, 5, 3);
+        return $this->avanzarLeccion($request, 5, 20);
     }
 
     public function avanzarLeccion21(Request $request)
     {
-        return $this->avanzarLeccion($request, 5, 4);
+        return $this->avanzarLeccion($request, 5, 21);
     }
 
     public function avanzarLeccion22(Request $request)
     {
-        return $this->avanzarLeccion($request, 6, 1);
+        return $this->avanzarLeccion($request, 6, 22);
     }
 
     public function avanzarLeccion23(Request $request)
     {
-        return $this->avanzarLeccion($request, 6, 2);
+        return $this->avanzarLeccion($request, 6, 23);
     }
 
     public function avanzarLeccion24(Request $request)
     {
-        return $this->avanzarLeccion($request, 6, 3);
+        return $this->avanzarLeccion($request, 6, 24);
     }
 }
