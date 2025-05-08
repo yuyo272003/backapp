@@ -54,5 +54,6 @@ Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-21', [Progres
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-22', [ProgresoController::class, 'avanzarLeccion22']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-23', [ProgresoController::class, 'avanzarLeccion23']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-24', [ProgresoController::class, 'avanzarLeccion24']);
-Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-25', [ProgresoController::class, 'avanzarLeccion25']);
+
+
 require __DIR__.'/auth.php';

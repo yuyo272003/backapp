@@ -409,84 +409,84 @@ class ProgresoController extends Controller
         return $this->avanzarLeccion($request, 2, 3);
     }
 
-    public function avanzarLeccion10(Request $request)
-    {
-        return $this->avanzarLeccion($request, 2, 4);
-    }
+//    public function avanzarLeccion10(Request $request)
+//    {
+//        return $this->avanzarLeccion($request, 2, 4);
+//    }
 
-    public function avanzarLeccion11(Request $request)
+    public function avanzarLeccion10(Request $request)
     {
         return $this->avanzarLeccion($request, 3, 1);
     }
 
 
-    public function avanzarLeccion12(Request $request)
+    public function avanzarLeccion11(Request $request)
     {
         return $this->avanzarLeccion($request, 3, 2);
     }
 
-    public function avanzarLeccion13(Request $request)
+    public function avanzarLeccion12(Request $request)
     {
         return $this->avanzarLeccion($request, 3, 3);
     }
 
-    public function avanzarLeccion14(Request $request)
+    public function avanzarLeccion13(Request $request)
     {
         return $this->avanzarLeccion($request, 4, 1);
     }
-    public function avanzarLeccion15(Request $request)
+    public function avanzarLeccion14(Request $request)
     {
         return $this->avanzarLeccion($request, 4, 2);
     }
 
-    public function avanzarLeccion16(Request $request)
+    public function avanzarLeccion15(Request $request)
     {
         return $this->avanzarLeccion($request, 4, 3);
     }
 
-    public function avanzarLeccion17(Request $request)
+    public function avanzarLeccion16(Request $request)
     {
         return $this->avanzarLeccion($request, 4, 4);
     }
 
 
-    public function avanzarLeccion18(Request $request)
+    public function avanzarLeccion17(Request $request)
     {
         return $this->avanzarLeccion($request, 4, 5);
     }
 
 
-    public function avanzarLeccion19(Request $request)
+    public function avanzarLeccion18(Request $request)
     {
         return $this->avanzarLeccion($request, 5, 1);
     }
 
-    public function avanzarLeccion20(Request $request)
+    public function avanzarLeccion19(Request $request)
     {
         return $this->avanzarLeccion($request, 5, 2);
     }
 
-    public function avanzarLeccion21(Request $request)
+    public function avanzarLeccion20(Request $request)
     {
         return $this->avanzarLeccion($request, 5, 3);
     }
 
-    public function avanzarLeccion22(Request $request)
+    public function avanzarLeccion21(Request $request)
     {
         return $this->avanzarLeccion($request, 5, 4);
     }
 
-    public function avanzarLeccion23(Request $request)
+    public function avanzarLeccion22(Request $request)
     {
         return $this->avanzarLeccion($request, 6, 1);
     }
 
-    public function avanzarLeccion24(Request $request)
+    public function avanzarLeccion23(Request $request)
     {
         return $this->avanzarLeccion($request, 6, 2);
     }
 
-    public function avanzarLeccion25(Request $request)
+    public function avanzarLeccion24(Request $request)
     {
         return $this->avanzarLeccion($request, 6, 3);
     }

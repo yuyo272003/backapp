@@ -19,7 +19,7 @@ class LeccionesSeeder extends Seeder
             ['nivel_id' => 2, 'titulo' => 'Revisión y práctica de consonantes', 'orden' => 1],
             ['nivel_id' => 2, 'titulo' => 'Consonantes y vocales', 'orden' => 2],
             ['nivel_id' => 2, 'titulo' => 'Práctica de palabras', 'orden' => 3],
-            ['nivel_id' => 2, 'titulo' => 'Introducción a la escritura', 'orden' => 4],
+           // ['nivel_id' => 2, 'titulo' => 'Introducción a la escritura', 'orden' => 4],
             ['nivel_id' => 3, 'titulo' => 'Combinación de consonantes', 'orden' => 1],
             ['nivel_id' => 3, 'titulo' => 'Consonantes combinadas y vocales', 'orden' => 2],
             ['nivel_id' => 3, 'titulo' => 'Formación de palabras', 'orden' => 2],
