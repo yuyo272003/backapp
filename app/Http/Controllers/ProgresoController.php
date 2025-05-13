@@ -471,23 +471,23 @@ class ProgresoController extends Controller
         return $this->avanzarLeccion($request, 5, 20);
     }
 
-    public function avanzarLeccion21(Request $request)
-    {
-        return $this->avanzarLeccion($request, 5, 21);
-    }
-
-    public function avanzarLeccion22(Request $request)
-    {
-        return $this->avanzarLeccion($request, 6, 22);
-    }
-
-    public function avanzarLeccion23(Request $request)
-    {
-        return $this->avanzarLeccion($request, 6, 23);
-    }
-
-    public function avanzarLeccion24(Request $request)
-    {
-        return $this->avanzarLeccion($request, 6, 24);
-    }
+//    public function avanzarLeccion21(Request $request)
+//    {
+//        return $this->avanzarLeccion($request, 5, 21);
+//    }
+//
+//    public function avanzarLeccion22(Request $request)
+//    {
+//        return $this->avanzarLeccion($request, 6, 22);
+//    }
+//
+//    public function avanzarLeccion23(Request $request)
+//    {
+//        return $this->avanzarLeccion($request, 6, 23);
+//    }
+//
+//    public function avanzarLeccion24(Request $request)
+//    {
+//        return $this->avanzarLeccion($request, 6, 24);
+//    }
 }

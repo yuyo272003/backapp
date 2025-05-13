@@ -28,13 +28,13 @@ class LeccionesSeeder extends Seeder
             ['nivel_id' => 4, 'titulo' => 'Trisílabas', 'orden' => 3],
             ['nivel_id' => 4, 'titulo' => 'Polisílabas', 'orden' => 4],
             ['nivel_id' => 4, 'titulo' => 'Lectura de oraciones', 'orden' => 5],
-            ['nivel_id' => 5, 'titulo' => 'B y V', 'orden' => 1],
-            ['nivel_id' => 5, 'titulo' => 'C, S y Z', 'orden' => 2],
-            ['nivel_id' => 5, 'titulo' => 'Ll y Y', 'orden' => 3],
-            ['nivel_id' => 5, 'titulo' => 'R y RR', 'orden' => 4],
-            ['nivel_id' => 6, 'titulo' => 'Acentuación', 'orden' => 1],
-            ['nivel_id' => 6, 'titulo' => 'Introducción a los signos de puntuación', 'orden' => 2],
-            ['nivel_id' => 6, 'titulo' => 'Párrafos cortos', 'orden' => 3],
+//            ['nivel_id' => 5, 'titulo' => 'B y V', 'orden' => 1],
+//            ['nivel_id' => 5, 'titulo' => 'C, S y Z', 'orden' => 2],
+//            ['nivel_id' => 5, 'titulo' => 'Ll y Y', 'orden' => 3],
+//            ['nivel_id' => 5, 'titulo' => 'R y RR', 'orden' => 4],
+            ['nivel_id' => 5, 'titulo' => 'Acentuación', 'orden' => 1],
+            ['nivel_id' => 5, 'titulo' => 'Introducción a los signos de puntuación', 'orden' => 2],
+            ['nivel_id' => 5, 'titulo' => 'Párrafos cortos', 'orden' => 3],
         ]);
     }
 }

@@ -28,10 +28,6 @@ class NivelesSeeder extends Seeder
             ],
             [
                 'nombre' => 'Aprendizaje',
-                'numero_lecciones' => 4,
-            ],
-            [
-                'nombre' => 'Aprendizaje',
                 'numero_lecciones' => 3,
             ],
         ]);

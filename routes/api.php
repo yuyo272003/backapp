@@ -50,10 +50,10 @@ Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-17', [Progres
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-18', [ProgresoController::class, 'avanzarLeccion18']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-19', [ProgresoController::class, 'avanzarLeccion19']);
 Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-20', [ProgresoController::class, 'avanzarLeccion20']);
-Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-21', [ProgresoController::class, 'avanzarLeccion21']);
-Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-22', [ProgresoController::class, 'avanzarLeccion22']);
-Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-23', [ProgresoController::class, 'avanzarLeccion23']);
-Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-24', [ProgresoController::class, 'avanzarLeccion24']);
+//Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-21', [ProgresoController::class, 'avanzarLeccion21']);
+//Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-22', [ProgresoController::class, 'avanzarLeccion22']);
+//Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-23', [ProgresoController::class, 'avanzarLeccion23']);
+//Route::middleware('auth:sanctum')->post('/progreso/avanzar-leccion-24', [ProgresoController::class, 'avanzarLeccion24']);
 
 
 require __DIR__.'/auth.php';
